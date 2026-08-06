@@ -4,6 +4,7 @@ import Image from "next/image";
 import type { LetterStory, StorySpread } from "@/content/types";
 import { pairFacingSpreads } from "@/content/pairSpreads";
 import { spreadsWithFullStory } from "@/content/storyForPrint";
+import { assetPath } from "@/lib/assetPath";
 import { FitProse, FitWord } from "./FitText";
 
 export type PrintLayout = "facing" | "pages";
@@ -77,7 +78,7 @@ function PicturePane({
       <div className="print-page__frame">
         {spread.image ? (
           <Image
-            src={spread.image}
+            src={assetPath(spread.image)}
             alt={spread.imageAlt ?? ""}
             width={1200}
             height={900}

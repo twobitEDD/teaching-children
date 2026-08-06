@@ -7,6 +7,7 @@ import SimpleShelf, { type BookInput } from "simpleshelf";
 import "simpleshelf/dist/simpleshelf.css";
 import { bookId } from "@/content";
 import type { LetterStory } from "@/content/types";
+import { assetPath } from "@/lib/assetPath";
 
 type Props = {
   letters: LetterStory[];
@@ -24,7 +25,8 @@ const SPINE_COLORS = [
 ];
 
 function coverImage(letter: LetterStory): string | undefined {
-  return letter.spreads.find((s) => s.kind === "picture" && s.image)?.image;
+  const src = letter.spreads.find((s) => s.kind === "picture" && s.image)?.image;
+  return src ? assetPath(src) : undefined;
 }
 
 function toBookInput(letter: LetterStory, index: number): BookInput {

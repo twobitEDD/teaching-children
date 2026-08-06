@@ -32,8 +32,9 @@ npx serve out
 
 Then open the path under `/teaching-children/`.
 
-- Home: A–Z grid (vowels A E I O U + consonants B C ready; rest “soon”)
+- Home: A–Z letter grid (hover A/B/C for Ant, Bee, Crow alternates)
 - Letter workspace: **Story** (tell-aloud / vowel gesture + source notes) · **Print preview** · **Outlines**
+- Book viewer shelf for flip-through preview
 - Use **Print / Save PDF** (browser print dialog)
 
 ## Stack

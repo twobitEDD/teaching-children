@@ -18,6 +18,7 @@ import HTMLFlipBookImport from "react-pageflip";
 import { bookId } from "@/content";
 import type { LetterStory, StorySpread } from "@/content/types";
 import { spreadsWithFullStory } from "@/content/storyForPrint";
+import { assetPath } from "@/lib/assetPath";
 import { FitProse, FitWord } from "./FitText";
 
 type Props = {
@@ -146,7 +147,7 @@ function PictureContent({
       <div className="viewer-page__frame">
         {spread.image ? (
           <Image
-            src={spread.image}
+            src={assetPath(spread.image)}
             alt={spread.imageAlt ?? ""}
             width={1200}
             height={900}
@@ -306,7 +307,7 @@ export function BookViewer({ letter }: Props) {
                   {coverArt?.image && (
                     <div className="viewer-cover__thumb">
                       <Image
-                        src={coverArt.image}
+                        src={assetPath(coverArt.image)}
                         alt=""
                         width={640}
                         height={400}
