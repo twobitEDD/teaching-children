@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Letter Story Studio
 
-## Getting Started
+Teacher-only Next.js app for designing and printing **physical** Waldorf-style letter stories for ages 4–7. Students never see this screen — you print storybook pages and outline sheets, then tell aloud.
 
-First, run the development server:
+## Quick start
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Home: A–Z grid (vowels A E I O U + consonants B C ready; rest “soon”)
+- Letter workspace: **Story** (tell-aloud / vowel gesture + source notes) · **Print preview** · **Outlines**
+- Use **Print / Save PDF** (browser print dialog)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Stack
 
-## Learn More
+- Next.js (App Router) + React + TypeScript + Tailwind CSS v4
+- Content as typed modules under `src/content/`
+- Static art under `public/letters/{letter}/`
 
-To learn more about Next.js, take a look at the following resources:
+## How to add a new letter
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Follow the checklist in [`docs/CONTENT-PIPELINE.md`](docs/CONTENT-PIPELINE.md) (consonants) or [`docs/VOWELS.md`](docs/VOWELS.md) (vowels).
+2. Create `src/content/letters/{letter}.ts` (copy a consonant or vowel file).
+3. Export and register it in `src/content/index.ts` (`readyLetters`).
+4. Add watercolor spreads to `public/letters/{letter}/spread-01.png`, …
+5. Run `npm run dev`, open the letter, read aloud, print a test page, polish.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Ready content
 
-## Deploy on Vercel
+| Letter | Cue | Source / method |
+|--------|-----|-----------------|
+| A | Ah — awe (*Star Money*) | Vowel gesture + Grimm |
+| B | Bear | Grimm — *The Willow-Wren and the Bear* |
+| C | Cat | Perrault — *Puss in Boots* (miller’s cat) |
+| E | Eh — boundary (*Two Goats*) | Vowel gesture + Aesop |
+| I | Ee — “I am” (*Tin Soldier*) | Vowel gesture + Andersen |
+| O | Oh — wholeness (*Stone Soup*) | Vowel gesture + folk |
+| U | Oo — close (*Thumbelina*) | Vowel gesture + Andersen |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Consonants: world stories. Vowels: singing sounds / emotional gestures — see [`docs/VOWELS.md`](docs/VOWELS.md).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Project layout
+
+```
+src/app/                  # routes (home, /letters/[letter])
+src/components/           # grid, workspace, story, print, outline
+src/content/              # schema + letter modules
+public/letters/           # print art
+docs/CONTENT-PIPELINE.md  # consonant research + art prompts
+docs/VOWELS.md            # vowel gesture map
+```
+
+## Print tips
+
+- US Letter, portrait
+- In print preview, hide headers/footers in the browser dialog if you want clean classroom pages
+- Outline sheets use stroked type for crisp chalk/crayon forms
