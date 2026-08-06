@@ -11,6 +11,27 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+## Public site (GitHub Pages)
+
+Live URL after deploy: **https://twobitEDD.github.io/teaching-children/**
+
+Every push to `main` builds a static export and deploys via [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml).
+
+**One-time setup in GitHub** (if Pages isn’t on yet):
+
+1. Repo **Settings → Pages**
+2. **Source:** GitHub Actions
+3. Push to `main` (or run the **Deploy GitHub Pages** workflow manually)
+
+Local static build that matches Pages paths:
+
+```bash
+npm run build:pages
+npx serve out
+```
+
+Then open the path under `/teaching-children/`.
+
 - Home: A–Z grid (vowels A E I O U + consonants B C ready; rest “soon”)
 - Letter workspace: **Story** (tell-aloud / vowel gesture + source notes) · **Print preview** · **Outlines**
 - Use **Print / Save PDF** (browser print dialog)
