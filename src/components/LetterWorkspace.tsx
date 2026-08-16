@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { bookId } from "@/content";
 import type { LetterStory } from "@/content/types";
+import { waitForImages } from "@/lib/waitForImages";
 import { StoryPanel } from "./StoryPanel";
 import { PrintPreview, type PrintLayout } from "./PrintPreview";
 import { OutlineSheet } from "./OutlineSheet";
@@ -17,6 +18,7 @@ type Props = {
 export function LetterWorkspace({ letter }: Props) {
   const [tab, setTab] = useState<Tab>("story");
   const [printLayout, setPrintLayout] = useState<PrintLayout>("facing");
+  const [printing, setPrinting] = useState(false);
   const id = bookId(letter);
 
   useEffect(() => {
@@ -37,6 +39,26 @@ export function LetterWorkspace({ letter }: Props) {
       delete document.body.dataset.printLayout;
     };
   }, [printLayout]);
+
+  useEffect(() => {
+    // Ctrl/Cmd+P bypasses the button — still force print-art fetches.
+    const onBeforePrint = () => {
+      void waitForImages(document.querySelector(".print-preview"));
+    };
+    window.addEventListener("beforeprint", onBeforePrint);
+    return () => window.removeEventListener("beforeprint", onBeforePrint);
+  }, []);
+
+  async function handlePrint() {
+    if (printing) return;
+    setPrinting(true);
+    try {
+      await waitForImages(document.querySelector(".print-preview"));
+      window.print();
+    } finally {
+      setPrinting(false);
+    }
+  }
 
   return (
     <div className={`workspace${tab === "print" && printLayout === "facing" ? " workspace--wide" : ""}`}>
@@ -78,9 +100,10 @@ export function LetterWorkspace({ letter }: Props) {
           <button
             type="button"
             className="workspace__print-btn"
-            onClick={() => window.print()}
+            onClick={() => void handlePrint()}
+            disabled={printing}
           >
-            Print / Save PDF
+            {printing ? "Preparing pictures…" : "Print / Save PDF"}
           </button>
           <Link href={`/bookshelf/${id}`} className="workspace__book-link">
             Book viewer
