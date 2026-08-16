@@ -83,6 +83,10 @@ function PicturePane({
             width={1200}
             height={900}
             className="print-page__image"
+            // Print preview lives in a clipped `.print-only` box until that tab is
+            // open (and PDF export prints from any tab). Lazy loading skips those
+            // fetches, so picture pages come out blank in Save as PDF.
+            loading="eager"
           />
         ) : (
           <div className="print-page__placeholder">Art pending</div>
